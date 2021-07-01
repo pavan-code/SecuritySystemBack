@@ -26,7 +26,7 @@ public class CredentialService implements UserDetailsService{
 			System.out.println("model is null");
 			throw new UsernameNotFoundException("Not Found...");
 		}
-		System.out.println("model found" + model);
+		System.out.println("model found " + model);
 		return new UserDetail(model);
 	}
 }

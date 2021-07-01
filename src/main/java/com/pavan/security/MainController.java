@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.*;
 import com.pavan.models.AuthRequest;
 import com.pavan.models.AuthResponse;
 import com.pavan.models.User;
@@ -44,12 +44,12 @@ public class MainController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User u = userRepo.save(user);
 		System.out.println(u);
 		return ResponseEntity.ok(new AuthResponse(null, "Registration successfull"));
 	}
 	
-
 	@PostMapping(value = "/login", produces = "application/json")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest)
 			throws Exception {
@@ -62,8 +62,14 @@ public class MainController {
 			return ResponseEntity.ok(new AuthResponse(null, "Invalid Username or Password"));
 		}
 		final UserDetails userDetails = service.loadUserByUsername(authenticationRequest.getEmail());
+		System.out.println("got it: "+ userDetails);
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
 		return ResponseEntity.ok(new AuthResponse(jwt, "Login Successfull!"));
+	}
+
+	@GetMapping("/all-users")
+	public List<User> getUsers() {
+		return userRepo.findAll();
 	}
 }
