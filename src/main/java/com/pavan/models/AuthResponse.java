@@ -3,13 +3,13 @@ package com.pavan.models;
 public class AuthResponse {
 	private String jwt;
 	private String message;
-	
+	private User user;
 
-	public AuthResponse(String jwt, String message) {
+	public AuthResponse(String jwt, String message, User user) {
 		super();
 		this.jwt = jwt;
 		this.message = message;
-		
+		this.user = user;		
 	}
 
 	public String getJwt() {
@@ -25,6 +25,11 @@ public class AuthResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 		
 }

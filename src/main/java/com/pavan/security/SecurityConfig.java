@@ -39,6 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register").permitAll()
 				.antMatchers("/hello").permitAll()
 				.antMatchers("/all-users").hasRole("USER")
+				.antMatchers("/isBankLocked").hasRole("USER")
+				.antMatchers("/setBankPassword").hasRole("USER")
+				.antMatchers("/getBankAccounts").hasRole("USER")
+				.antMatchers("/addBankAccount").hasRole("USER")
+				.antMatchers("/deleteAccount").hasRole("USER")
+				.antMatchers("/updateAccount").hasRole("USER")
 				.anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.csrf().disable();
